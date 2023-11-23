@@ -16,4 +16,28 @@ public class User {
     List<Movie> movies;
 @DynamoDBAttribute
     Map<String, List<Movie>> allUsers;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
+
+    public Map<String, List<Movie>> getAllUsers() {
+        return allUsers;
+    }
+
+    public void setAllUsers(Map<String, List<Movie>> allUsers) {
+        this.allUsers = allUsers;
+    }
 }

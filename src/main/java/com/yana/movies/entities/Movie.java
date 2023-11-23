@@ -12,4 +12,19 @@ public class Movie {
 
 @DynamoDBAttribute
     String description;
+
+    public void setMovieName(String movieName) {
+        this.movieName = movieName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public String getMovieName() {
+        return movieName;
+    }
 }
