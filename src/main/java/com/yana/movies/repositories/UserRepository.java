@@ -10,7 +10,7 @@ import com.yana.movies.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.*;
 
 @Repository
 public class UserRepository {
@@ -37,6 +37,21 @@ public class UserRepository {
         Movie movieToDelete = mapper.load(Movie.class, userName);
         mapper.delete(movieToDelete);
         return "Successfully deleted movie" + userName;
+    }
+    void addMovie (String userName, Movie movie) throws Exception {
+        User user = new User();
+        Map<String, Set<Movie>> users = user.getAllUsers();
+        if (users.containsKey(userName)) {
+            Set<Movie> userList = users.get(userName);
+            if (!userList.add(movie)){
+                throw new Exception("The movie is already in the list!");
+            }
+        userList.add(movie);
+        } else {
+            Set<Movie> movieToAdd = new HashSet<>();
+            movieToAdd.add(movie);
+            users.put(userName, movieToAdd);
+        }
     }
 
 }

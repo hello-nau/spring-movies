@@ -7,6 +7,8 @@ import lombok.Data;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 @Data
 @DynamoDBTable(tableName = "users")
 public class User {
@@ -15,7 +17,10 @@ public class User {
 @DynamoDBAttribute
     List<Movie> movies;
 @DynamoDBAttribute
-    Map<String, List<Movie>> allUsers;
+    Map<String, Set<Movie>> allUsers;
+
+    public User() {
+    }
 
     public String getUserName() {
         return userName;
@@ -33,11 +38,8 @@ public class User {
         this.movies = movies;
     }
 
-    public Map<String, List<Movie>> getAllUsers() {
+    public Map<String, Set<Movie>> getAllUsers() {
         return allUsers;
     }
 
-    public void setAllUsers(Map<String, List<Movie>> allUsers) {
-        this.allUsers = allUsers;
-    }
 }
