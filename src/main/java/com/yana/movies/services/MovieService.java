@@ -3,11 +3,14 @@ package com.yana.movies.services;
 import com.amazonaws.services.dynamodbv2.xspec.M;
 import com.yana.movies.entities.Movie;
 import com.yana.movies.repositories.MovieRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class MovieService {
-    MovieRepository movieRepository = new MovieRepository();
+    @Autowired
+    MovieRepository movieRepository;
     public Movie save(Movie movie) {
         return movieRepository.save(movie);
     }
@@ -20,8 +23,9 @@ public class MovieService {
     public String update(String movieName, Movie movie) {
         return movieRepository.update(movieName, movie);
     }
-    public String detele(String movieName) {
+    public String delete(String movieName) {
         return movieRepository.delete(movieName);
     }
 
 }
+

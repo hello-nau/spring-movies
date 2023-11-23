@@ -17,7 +17,8 @@ public class MovieRepository {
     private DynamoDBMapper mapper;
     public Movie save(Movie movie) {
         mapper.save(movie);
-        return mapper.load(Movie.class, movie.getMovieName());
+//        return mapper.load(Movie.class, movie.getId());
+        return movie;
     }
     public Movie findByName(String movieName) {
         return mapper.load(Movie.class, movieName);
@@ -25,12 +26,12 @@ public class MovieRepository {
     public List<Movie> findAll() {
         return mapper.scan(Movie.class, new DynamoDBScanExpression());
     }
-    public String update(String movieName, Movie movie) {
+    public String update(String id, Movie movie) {
         mapper.save(movie, new DynamoDBSaveExpression()
-                .withExpectedEntry("movieName", new ExpectedAttributeValue(
-                        new AttributeValue().withS(movieName)
+                .withExpectedEntry("id", new ExpectedAttributeValue(
+                        new AttributeValue().withS(id)
                 )));
-        return "Successfully updated Movie" + movieName;
+        return "Successfully updated Movie" + id;
     }
     public String delete(String movieName) {
         Movie movieToDelete = mapper.load(Movie.class, movieName);
