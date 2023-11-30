@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 @DynamoDBTable(tableName = "movies")
 public class Movie {
-@DynamoDBHashKey
+@DynamoDBHashKey(attributeName = "id")
     String id; //movieName
 
-@DynamoDBAttribute
+@DynamoDBAttribute(attributeName = "description")
     String description;
 
     public void setId(String id) {

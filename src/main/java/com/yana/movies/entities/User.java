@@ -12,11 +12,11 @@ import java.util.Set;
 @Data
 @DynamoDBTable(tableName = "users")
 public class User {
-@DynamoDBHashKey
+@DynamoDBHashKey(attributeName = "userName")
     String userName;
-@DynamoDBAttribute
+@DynamoDBAttribute(attributeName = "movieList")
     List<Movie> movies;
-@DynamoDBAttribute
+@DynamoDBAttribute(attributeName = "allUsers")
     Map<String, Set<Movie>> allUsers;
 
     public User() {

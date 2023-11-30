@@ -9,12 +9,12 @@ import com.yana.movies.entities.Movie;
 import java.util.List;
 
 @RestController
-@RequestMapping("/movies")
+@RequestMapping("/")
 @CrossOrigin(origins = "*")
 public class MovieController {
     @Autowired
     MovieService movieService;
-    @PostMapping("/movies") //edited 23nov
+    @RequestMapping(value="/movies", produces="application/json")
     public ResponseEntity<Movie> save(@RequestBody Movie movie) {
         return ResponseEntity.ok(movieService.save(movie));
     }
@@ -28,24 +28,27 @@ public class MovieController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/movies")
     public ResponseEntity<List<Movie>> findAll() {
         return ResponseEntity.ok(movieService.findAll());
     }
-    @PutMapping("{id}")
-    public ResponseEntity<Movie> update(@PathVariable(value="id")String movieName,
+    @PutMapping("/movies/{id}")
+    public ResponseEntity<Movie> update(@PathVariable(value="id")String id,
                                         @RequestBody Movie movieToUpdate) {
-        Movie existingMovie = movieService.findById(movieName);
+        Movie existingMovie = movieService.findById(id);
         if (existingMovie != null) {
-            existingMovie.setId(movieToUpdate.getId());
-            existingMovie.setDescription(movieToUpdate.getDescription());
-            Movie updated = movieService.save(existingMovie);
-            return ResponseEntity.ok(updated);
-        } else {
-           return ResponseEntity.notFound().build();
+            if(existingMovie.getId().equals(movieToUpdate.getId())) {
+                existingMovie.setDescription(movieToUpdate.getDescription());
+                Movie updated = movieService.save(existingMovie);
+                return ResponseEntity.ok(updated);
+            } else  {
+                movieService.delete(existingMovie.getId());
+                movieService.save(movieToUpdate);
+            }
         }
+        return ResponseEntity.ok(movieToUpdate);
     }
-    @DeleteMapping("{id}")
+    @DeleteMapping("/movies/{id}")
     public ResponseEntity<String> delete(@PathVariable(value="id") String id) {
         return ResponseEntity.ok(movieService.delete(id));
     }

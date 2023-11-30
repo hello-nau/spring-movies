@@ -31,7 +31,7 @@ public class UserRepository {
                 .withExpectedEntry("movieName", new ExpectedAttributeValue(
                         new AttributeValue().withS(userName)
                 )));
-        return "Successfully updated Movie" + userName;
+        return "Successfully updated Movie for " + userName;
     }
     public String delete(String userName) {
         Movie movieToDelete = mapper.load(Movie.class, userName);
