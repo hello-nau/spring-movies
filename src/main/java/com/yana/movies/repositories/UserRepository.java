@@ -33,12 +33,13 @@ public class UserRepository {
                 )));
         return "Successfully updated Movie for " + userName;
     }
+
     public String delete(String userName) {
         Movie movieToDelete = mapper.load(Movie.class, userName);
         mapper.delete(movieToDelete);
         return "Successfully deleted movie" + userName;
     }
-    void addMovie (String userName, Movie movie) throws Exception {
+    public void addMovie (String userName, Movie movie) throws Exception {
         User user = new User();
         Map<String, Set<Movie>> users = user.getAllUsers();
         if (users.containsKey(userName)) {
