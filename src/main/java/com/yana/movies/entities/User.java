@@ -15,10 +15,20 @@ import java.util.Set;
 public class User {
 @DynamoDBHashKey(attributeName = "userName")
     String userName;
+@DynamoDBAttribute(attributeName = "description")
+    String description;
 @DynamoDBAttribute(attributeName = "movieList")
     Set<Movie> movies;
 @DynamoDBAttribute(attributeName = "allUsers")
     Map<String, Set<Movie>> allUsers;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public User() {
     }

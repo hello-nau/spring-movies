@@ -21,8 +21,9 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-    public void addMovie(String userName, Movie movie) throws Exception {
+    public String addMovie(String userName, Movie movie) throws Exception {
         userRepository.addMovie(userName, movie);
+        return "";
     }
     public String delete(String userName) {
         return userRepository.delete(userName);

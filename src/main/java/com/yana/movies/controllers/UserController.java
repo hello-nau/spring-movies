@@ -22,7 +22,7 @@ public class UserController {
         return ResponseEntity.ok(userService.save(user));
     }
 
-    @GetMapping("{userName}")
+    @GetMapping("/users/{userName}")
     public ResponseEntity<User> findByName(@PathVariable(value = "userName") String userName) {
         User user = userService.findByName(userName);
         if(user != null) {
@@ -31,7 +31,7 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
     @GetMapping("/users")
-    public ResponseEntity<List<User>> indAll () {
+    public ResponseEntity<List<User>> findAll () {
         List<User> allUsers = new ArrayList<>();
         allUsers = userService.getAllUsers();
         return ResponseEntity.ok(allUsers);
@@ -51,5 +51,6 @@ public class UserController {
     public ResponseEntity<String> delete (@PathVariable(value = "userName") String userName) {
         return ResponseEntity.ok(userService.delete(userName));
     }
+
 
 }

@@ -39,9 +39,10 @@ public class UserRepository {
         mapper.delete(movieToDelete);
         return "Successfully deleted movie" + userName;
     }
-    public void addMovie (String userName, Movie movie) throws Exception {
-        User user = new User();
+    public String addMovie (String userName, Movie movie) throws Exception {
+        User user = mapper.load(User.class, userName);
         Map<String, Set<Movie>> users = user.getAllUsers();
+
         if (users.containsKey(userName)) {
             Set<Movie> userList = users.get(userName);
             if (!userList.add(movie)){
@@ -53,6 +54,7 @@ public class UserRepository {
             movieToAdd.add(movie);
             users.put(userName, movieToAdd);
         }
+        return "The movie " + movie + " added successfully to user " + userName;
     }
 
 }

@@ -33,6 +33,7 @@ public class MovieRepository {
                 )));
         return "Successfully updated Movie" + id;
     }
+
     public String delete(String movieName) {
         Movie movieToDelete = mapper.load(Movie.class, movieName);
         mapper.delete(movieToDelete);
