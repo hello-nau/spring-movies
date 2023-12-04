@@ -19,8 +19,6 @@ public class User {
     String description;
 @DynamoDBAttribute(attributeName = "movieList")
     Set<Movie> movies;
-@DynamoDBAttribute(attributeName = "allUsers")
-    Map<String, Set<Movie>> allUsers;
 
     public String getDescription() {
         return description;
@@ -29,7 +27,6 @@ public class User {
     public void setDescription(String description) {
         this.description = description;
     }
-
     public User() {
     }
 
@@ -44,13 +41,12 @@ public class User {
     public Set<Movie> getMovies(String userName) {
         return movies;
     }
-
+    public boolean addMovie(Movie movie) {
+        if (!movies.add(movie)) return false;
+        return true;
+    }
     public void setMovies(Set<Movie> movies) {
         this.movies = movies;
-    }
-
-    public Map<String, Set<Movie>> getAllUsers() {
-        return allUsers;
     }
 
 }

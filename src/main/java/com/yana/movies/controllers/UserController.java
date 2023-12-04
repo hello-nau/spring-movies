@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/")
@@ -37,8 +38,7 @@ public class UserController {
         return ResponseEntity.ok(allUsers);
     }
     @PutMapping("/users/{userName}")
-    public ResponseEntity<User> update (@PathVariable(value="userName") String userName, @RequestBody Movie movie)
-            throws Exception {
+    public ResponseEntity<User> update (@PathVariable(value="userName") String userName, @RequestBody Movie movie) {
         User user = userService.findByName(userName);
         if (user != null) {
             userService.addMovie(userName, movie);
@@ -46,6 +46,16 @@ public class UserController {
         }
         return ResponseEntity.notFound().build();
     }
+    @PutMapping("/users/{userName}/movieList")
+    public ResponseEntity<String> addMovie(@PathVariable(value="userName")String userName, @RequestBody Movie movie) {
+        return ResponseEntity.ok(userService.addMovie(userName, movie));
+    }
+
+    @GetMapping("/users/{userName}/movieList")
+    public ResponseEntity<Set<Movie>> getMovies(@PathVariable(value = "userName") String userName) {
+        return ResponseEntity.ok(userService.getMovies(userName));
+    }
+
 
     @DeleteMapping("users/{userName}")
     public ResponseEntity<String> delete (@PathVariable(value = "userName") String userName) {

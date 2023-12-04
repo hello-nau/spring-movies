@@ -39,22 +39,19 @@ public class UserRepository {
         mapper.delete(movieToDelete);
         return "Successfully deleted movie" + userName;
     }
-    public String addMovie (String userName, Movie movie) throws Exception {
-        User user = mapper.load(User.class, userName);
-        Map<String, Set<Movie>> users = user.getAllUsers();
 
-        if (users.containsKey(userName)) {
-            Set<Movie> userList = users.get(userName);
-            if (!userList.add(movie)){
-                throw new Exception("The movie is already in the list!");
-            }
-        userList.add(movie);
-        } else {
-            Set<Movie> movieToAdd = new HashSet<>();
-            movieToAdd.add(movie);
-            users.put(userName, movieToAdd);
+    public String addMovie (String userName, Movie movie)  {
+        User user = mapper.load(User.class, userName);
+        if (!user.addMovie(movie)) {
+            return "The movie " + movie + " already exists in the list.";
         }
+        user.addMovie(movie);
         return "The movie " + movie + " added successfully to user " + userName;
+    }
+
+    public Set<Movie> getMovies(String userName) {
+        User user = mapper.load(User.class, userName);
+        return user.getMovies();
     }
 
 }
