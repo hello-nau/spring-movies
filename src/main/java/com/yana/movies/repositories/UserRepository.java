@@ -49,12 +49,17 @@ public class UserRepository {
             return "The movie " + movie + " already exists in the list.";
         }
         user.addMovie(movie);
+        mapper.save(user, new DynamoDBSaveExpression()
+                .withExpectedEntry("userName", new ExpectedAttributeValue(
+                        new AttributeValue().withS(userName)
+                )));
         return "The movie " + movie + " added successfully to user " + userName;
     }
 
     public Set<Movie> getMovies(String userName) {
         User user = mapper.load(User.class, userName);
-        return user.getMovies();
+        Set<Movie> movieSet = user.getMovies();
+        return movieSet;
     }
 
 }

@@ -16,6 +16,7 @@ public class UserService {
         return userRepository.save(user);
     }
     public User findByName(String userName) {
+        System.out.println("We're in userService findByName");
         return userRepository.findByName(userName);
     }
     public List<User> getAllUsers() {
