@@ -21,6 +21,9 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+    public String update(String userName, Movie movie) {
+        return userRepository.update(userName, movie);
+    }
     public Set<Movie> getMovies(String userName) {
         return userRepository.getMovies(userName);
     }

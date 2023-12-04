@@ -26,9 +26,12 @@ public class UserRepository {
     public List<User> findAll() {
         return mapper.scan(User.class, new DynamoDBScanExpression());
     }
-    public String update(String userName, User user) {
+    public String update(String userName, Movie movie) {
+        User user = findByName(userName);
+        Set<Movie> movieSet = user.getMovies();
+        movieSet.add(movie);
         mapper.save(user, new DynamoDBSaveExpression()
-                .withExpectedEntry("movieName", new ExpectedAttributeValue(
+                .withExpectedEntry("userName", new ExpectedAttributeValue(
                         new AttributeValue().withS(userName)
                 )));
         return "Successfully updated Movie for " + userName;

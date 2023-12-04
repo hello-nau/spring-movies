@@ -5,9 +5,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import lombok.Data;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @Data
@@ -15,18 +12,9 @@ import java.util.Set;
 public class User {
 @DynamoDBHashKey(attributeName = "userName")
     String userName;
-@DynamoDBAttribute(attributeName = "description")
-    String description;
 @DynamoDBAttribute(attributeName = "movieList")
     Set<Movie> movies;
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
     public User() {
     }
 
@@ -43,6 +31,7 @@ public class User {
     }
     public boolean addMovie(Movie movie) {
         if (!movies.add(movie)) return false;
+        movies.add(movie);
         return true;
     }
     public void setMovies(Set<Movie> movies) {

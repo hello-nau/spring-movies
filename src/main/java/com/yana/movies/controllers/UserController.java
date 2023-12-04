@@ -31,6 +31,12 @@ public class UserController {
         }
         return ResponseEntity.notFound().build();
     }
+//    @GetMapping("/users/{userName}")
+//    public ResponseEntity<Set<Movie>> getMovies(@PathVariable(value = "userName") String userName) {
+//        Set<Movie> movieSet = userService.getMovies(userName);
+//        System.out.println("We're in getMovies of user controller");
+//        return ResponseEntity.ok(movieSet);
+//    }
     @GetMapping("/users")
     public ResponseEntity<List<User>> findAll () {
         List<User> allUsers = new ArrayList<>();
@@ -38,24 +44,13 @@ public class UserController {
         return ResponseEntity.ok(allUsers);
     }
     @PutMapping("/users/{userName}")
-    public ResponseEntity<User> update (@PathVariable(value="userName") String userName, @RequestBody Movie movie) {
-        User user = userService.findByName(userName);
-        if (user != null) {
-            userService.addMovie(userName, movie);
-            return ResponseEntity.ok(user);
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<String> update (@PathVariable(value="userName") String userName, @RequestBody Movie movie) {
+        return ResponseEntity.ok(userService.update(userName, movie));
     }
     @PutMapping("/users/{userName}/movieList")
     public ResponseEntity<String> addMovie(@PathVariable(value="userName")String userName, @RequestBody Movie movie) {
         return ResponseEntity.ok(userService.addMovie(userName, movie));
     }
-
-    @GetMapping("/users/{userName}/movieList")
-    public ResponseEntity<Set<Movie>> getMovies(@PathVariable(value = "userName") String userName) {
-        return ResponseEntity.ok(userService.getMovies(userName));
-    }
-
 
     @DeleteMapping("users/{userName}")
     public ResponseEntity<String> delete (@PathVariable(value = "userName") String userName) {

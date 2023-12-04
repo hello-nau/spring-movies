@@ -7,7 +7,6 @@ import lombok.Data;
 public class Movie {
 @DynamoDBHashKey(attributeName = "id")
     String id; //movieName
-
 @DynamoDBAttribute(attributeName = "description")
     String description;
 
