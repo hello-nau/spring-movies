@@ -1,5 +1,6 @@
 package com.yana.movies.services;
 
+import com.amazonaws.services.dynamodbv2.xspec.M;
 import com.yana.movies.entities.User;
 import com.yana.movies.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ public class UserService {
         return userRepository.save(user);
     }
     public User findByName(String userName) {
-        System.out.println("We're in userService findByName");
         return userRepository.findByName(userName);
     }
     public List<User> getAllUsers() {
@@ -30,6 +30,9 @@ public class UserService {
     }
     public String addMovie(String userName, Movie movie)  {
         return userRepository.addMovie(userName, movie);
+    }
+    public String deleteMovie (String userName, Movie movieToDelete) {
+        return userRepository.deleteMovie(userName, movieToDelete);
     }
     public String delete(String userName) {
         return userRepository.delete(userName);

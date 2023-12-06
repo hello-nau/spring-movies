@@ -2,6 +2,8 @@ package com.yana.movies.entities;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import lombok.Data;
 
+import java.util.Objects;
+
 @Data
 @DynamoDBTable(tableName = "movies")
 public class Movie {
@@ -23,5 +25,25 @@ public class Movie {
     }
     public String getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id='" + id + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Movie movie)) return false;
+        return Objects.equals(id, movie.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

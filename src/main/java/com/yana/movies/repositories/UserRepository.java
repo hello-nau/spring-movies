@@ -38,9 +38,9 @@ public class UserRepository {
     }
 
     public String delete(String userName) {
-        Movie movieToDelete = mapper.load(Movie.class, userName);
-        mapper.delete(movieToDelete);
-        return "Successfully deleted movie" + userName;
+        User user = mapper.load(User.class, userName);
+        mapper.delete(user);
+        return "Successfully deleted user" + userName;
     }
 
     public String addMovie (String userName, Movie movie)  {
@@ -53,7 +53,21 @@ public class UserRepository {
                 .withExpectedEntry("userName", new ExpectedAttributeValue(
                         new AttributeValue().withS(userName)
                 )));
-        return "The movie " + movie + " added successfully to user " + userName;
+        return "The movie " + movie.getId() + " added successfully to user " + userName;
+    }
+    public String deleteMovie (String userName, Movie movieToDelete) {
+        User user = mapper.load(User.class, userName);
+        Set<Movie> movieSet = user.getMovies();
+        if(movieSet.contains(movieToDelete)) {
+            movieSet.remove(movieToDelete);
+        } else {
+            return "The " + movieToDelete.getId() + " is not present in the list.";
+        }
+        mapper.save(user, new DynamoDBSaveExpression()
+                .withExpectedEntry("userName", new ExpectedAttributeValue(
+                        new AttributeValue().withS(userName)
+                )));
+        return "The movie " + movieToDelete.getId() + " was deleted successfully.";
     }
 
     public Set<Movie> getMovies(String userName) {
