@@ -45,7 +45,7 @@ public class UserController {
     public ResponseEntity<Movie> userMovie(@PathVariable(value = "userName") String userName,
                                            @PathVariable(value = "id") String movieId) {
         User user = userService.findByName(userName);
-        Set<Movie> movieSet = user.getMovies();
+        Set<Movie> movieSet = user.getMovies(userName);
             for (Movie m : movieSet) {
                 if (m.getId().equals(movieId)) {
                     try {

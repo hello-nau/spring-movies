@@ -14,9 +14,9 @@ import java.util.Set;
 @DynamoDBTable(tableName = "users")
 public class User {
 @DynamoDBHashKey(attributeName = "userName")
-    String userName;
+    private String userName;
 @DynamoDBAttribute(attributeName = "movieList")
-    Set<Movie> movies;
+    private Set<Movie> movies;
 
     public User() {
         this.movies = new HashSet<>();
