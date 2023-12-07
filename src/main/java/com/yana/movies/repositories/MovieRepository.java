@@ -20,13 +20,13 @@ public class MovieRepository {
 //        return mapper.load(Movie.class, movie.getId());
         return movie;
     }
-    public Movie findByName(String movieName) {
-        return mapper.load(Movie.class, movieName);
+    public Movie findByName(java.lang.String stringName) {
+        return mapper.load(Movie.class, stringName);
     }
     public List<Movie> findAll() {
         return mapper.scan(Movie.class, new DynamoDBScanExpression());
     }
-    public String update(String id, Movie movie) {
+    public java.lang.String update(java.lang.String id, Movie movie) {
         mapper.save(movie, new DynamoDBSaveExpression()
                 .withExpectedEntry("id", new ExpectedAttributeValue(
                         new AttributeValue().withS(id)
@@ -34,10 +34,10 @@ public class MovieRepository {
         return "Successfully updated Movie" + id;
     }
 
-    public String delete(String movieName) {
-        Movie movieToDelete = mapper.load(Movie.class, movieName);
+    public java.lang.String delete(java.lang.String stringName) {
+        Movie movieToDelete = mapper.load(Movie.class, stringName);
         mapper.delete(movieToDelete);
-        return "Successfully deleted movie " + movieName;
+        return "Successfully deleted movie " + stringName;
     }
 
 }

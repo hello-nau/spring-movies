@@ -3,7 +3,6 @@ package com.yana.movies.controllers;
 import com.yana.movies.entities.Movie;
 import com.yana.movies.entities.User;
 
-import java.util.HashSet;
 import java.util.logging.Logger;
 import com.yana.movies.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +27,12 @@ public class UserController {
     }
     @GetMapping("/users")
     public ResponseEntity<List<User>> findAll () {
-        List<User> allUsers = new ArrayList<>();
-        allUsers = userService.getAllUsers();
+        List<User> allUsers = userService.getAllUsers();
         return ResponseEntity.ok(allUsers);
     }
 
     @GetMapping("/users/{userName}")
-    public ResponseEntity<User> findByName(@PathVariable(value = "userName") String userName) {
+    public ResponseEntity<User> findByName(@PathVariable(value = "userName") java.lang.String userName) {
         User user = userService.findByName(userName);
         if(user != null) {
             return ResponseEntity.ok(user);
@@ -42,33 +40,33 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
     @GetMapping("/users/{userName}/movieList/{id}")
-    public ResponseEntity<Movie> userMovie(@PathVariable(value = "userName") String userName,
-                                           @PathVariable(value = "id") String movieId) {
+    public ResponseEntity<Movie> userMovie(@PathVariable(value = "userName") java.lang.String userName,
+                                           @PathVariable(value = "id") java.lang.String stringId) {
         User user = userService.findByName(userName);
-        Set<Movie> movieSet = user.getMovies(userName);
-            for (Movie m : movieSet) {
-                if (m.getId().equals(movieId)) {
+        Movie movie = user.getMovies().stream()
+                .filter(m -> m.getId().equals(stringId))
+                .findFirst()
+                .orElse(null);
                     try {
                         // Define your response entity
-                        String responseEntity = "Your response entity";
+                        java.lang.String responseEntity = "Your response entity";
                         // Log the successful status code and response entity
                         LOGGER.info("GET request (userMovie) successful with status code: 200, response entity: " + responseEntity);
+                        return ResponseEntity.ok(movie);
                     } catch (Exception e) {
                         // Log the error message and status code
                         LOGGER.severe("GET request (userMovie) failed with status code: 500, error: " + e.getMessage());
                     }
-                    return ResponseEntity.ok(m);
-                }
-            }
+
 
         return ResponseEntity.notFound().build();
     }
     @GetMapping("/users/{userName}/movieList")
-    public ResponseEntity<Set<Movie>> getMovies(@PathVariable(value = "userName") String userName) {
+    public ResponseEntity<Set<Movie>> getMovies(@PathVariable(value = "userName") java.lang.String userName) {
         Set<Movie> movieSet = userService.getMovies(userName);
         try {
             // Define your response entity
-            String responseEntity = "Your response entity";
+            java.lang.String responseEntity = "Your response entity";
             // Log the successful status code and response entity
             LOGGER.info("GET request (getMovies) successful with status code: 200, response entity: " + responseEntity);
         } catch (Exception e) {
@@ -81,11 +79,11 @@ public class UserController {
 
 
     @PutMapping("/users/{userName}")
-    public ResponseEntity<String> update (@PathVariable(value="userName") String userName, @RequestBody Movie movie) {
+    public ResponseEntity<java.lang.String> update (@PathVariable(value="userName") java.lang.String userName, @RequestBody Movie movie) {
         return ResponseEntity.ok(userService.update(userName, movie));
     }
     @PutMapping("/users/{userName}/movieList")
-    public ResponseEntity<String> addMovie(@PathVariable(value="userName")String userName, @RequestBody Movie movie) {
+    public ResponseEntity<java.lang.String> addMovie(@PathVariable(value="userName") java.lang.String userName, @RequestBody Movie movie) {
         User user = userService.findByName(userName);
         Set<Movie> movieSet = user.getMovies();
         movieSet.add(movie);
@@ -93,17 +91,17 @@ public class UserController {
     }
 
     @DeleteMapping("users/{userName}")
-    public ResponseEntity<String> delete (@PathVariable(value = "userName") String userName) {
+    public ResponseEntity<java.lang.String> delete (@PathVariable(value = "userName") java.lang.String userName) {
         return ResponseEntity.ok(userService.delete(userName));
     }
     @DeleteMapping("users/{userName}/movieList/{id}")
-    public ResponseEntity<String> deleteMovie(@PathVariable(value = "userName") String userName,
-                                              @PathVariable(value = "id") String movieId ) {
+    public ResponseEntity<java.lang.String> deleteMovie(@PathVariable(value = "userName") java.lang.String userName,
+                                                        @PathVariable(value = "id") java.lang.String stringId) {
         User user = userService.findByName(userName);
         if (user == null) throw new RuntimeException("User not found");
         Set<Movie> movies = user.getMovies();
-        movies.removeIf(movie -> movie.getId().equals(movieId));
-        user.setMovies(movies);
+        movies.removeIf(movie -> movie.getId().equals(stringId));
+        user.setMovieSet(movies);
         userService.save(user);
         return ResponseEntity.ok().build();
 

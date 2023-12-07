@@ -19,7 +19,7 @@ public class MovieController {
         return ResponseEntity.ok(movieService.save(movie));
     }
     @GetMapping("{id}")
-    public ResponseEntity<Movie> findByName(@PathVariable(value = "id") String id) {
+    public ResponseEntity<Movie> findByName(@PathVariable(value = "id") java.lang.String id) {
         Movie movie = movieService.findById(id);
         if (movie != null) {
             return ResponseEntity.ok(movie);
@@ -33,7 +33,7 @@ public class MovieController {
         return ResponseEntity.ok(movieService.findAll());
     }
     @PutMapping("/movies/{id}")
-    public ResponseEntity<Movie> update(@PathVariable(value="id")String id,
+    public ResponseEntity<Movie> update(@PathVariable(value="id") java.lang.String id,
                                         @RequestBody Movie movieToUpdate) {
         Movie existingMovie = movieService.findById(id);
         if (existingMovie != null) {
@@ -49,7 +49,7 @@ public class MovieController {
         return ResponseEntity.ok(movieToUpdate);
     }
     @DeleteMapping("/movies/{id}")
-    public ResponseEntity<String> delete(@PathVariable(value="id") String id) {
+    public ResponseEntity<java.lang.String> delete(@PathVariable(value="id") java.lang.String id) {
         return ResponseEntity.ok(movieService.delete(id));
     }
 

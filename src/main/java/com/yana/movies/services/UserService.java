@@ -1,6 +1,5 @@
 package com.yana.movies.services;
 
-import com.amazonaws.services.dynamodbv2.xspec.M;
 import com.yana.movies.entities.User;
 import com.yana.movies.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,25 +15,25 @@ public class UserService {
     public User save (User user) {
         return userRepository.save(user);
     }
-    public User findByName(String userName) {
+    public User findByName(java.lang.String userName) {
         return userRepository.findByName(userName);
     }
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-    public String update(String userName, Movie movie) {
+    public java.lang.String update(java.lang.String userName, Movie movie) {
         return userRepository.update(userName, movie);
     }
-    public Set<Movie> getMovies(String userName) {
+    public Set<Movie> getMovies(java.lang.String userName) {
         return userRepository.getMovies(userName);
     }
-    public String addMovie(String userName, Movie movie)  {
+    public java.lang.String addMovie(java.lang.String userName, Movie movie)  {
         return userRepository.addMovie(userName, movie);
     }
-    public String deleteMovie (String userName, Movie movieToDelete) {
+    public java.lang.String deleteMovie (java.lang.String userName, Movie movieToDelete) {
         return userRepository.deleteMovie(userName, movieToDelete);
     }
-    public String delete(String userName) {
+    public java.lang.String delete(java.lang.String userName) {
         return userRepository.delete(userName);
     }
 
