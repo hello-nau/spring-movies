@@ -17,6 +17,9 @@ public class UserRepository {
     @Autowired
     private DynamoDBMapper mapper;
     public User save(User user) {
+        if (user.getMovieSet().isEmpty()) {
+            user.setMovieSet(null);
+        }
         mapper.save(user);
         return mapper.load(User.class, user.getUserName());
     }

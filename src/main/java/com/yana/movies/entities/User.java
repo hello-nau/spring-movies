@@ -3,6 +3,7 @@ package com.yana.movies.entities;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.Gson;
 import lombok.Data;
 
@@ -23,18 +24,21 @@ public class User {
         this.movieSet = new HashSet<>();
     }
 
-    public java.lang.String getUserName() {
+    public String getUserName() {
         return userName;
     }
 
-    public void setUserName(java.lang.String userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
     public Set<String> getMovieSet() {
+        if (movieSet == null) movieSet = new HashSet<>();
         return movieSet;
     }
+    @JsonIgnore
     public Set<Movie> getMovies() {
+        if(movieSet == null) movieSet = new HashSet<>();
         return movieSet.stream()
                 .map(json -> new Gson().fromJson(json, Movie.class))
                 .collect(Collectors.toSet());
@@ -44,9 +48,13 @@ public class User {
         return movieSet.add(json);
     }
     public void setMovieSet(Set<Movie> movies) {
-        this.movieSet = movies.stream()
-                .map(movie -> new Gson().toJson(movie))
-                .collect(Collectors.toSet());
+        if(movies == null) {
+            this.movieSet = new HashSet<>();
+        } else {
+            this.movieSet = movies.stream()
+                    .map(movie -> new Gson().toJson(movie))
+                    .collect(Collectors.toSet());
+        }
     }
 
     @Override
