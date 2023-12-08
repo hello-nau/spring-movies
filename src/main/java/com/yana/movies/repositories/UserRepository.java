@@ -20,16 +20,16 @@ public class UserRepository {
         mapper.save(user);
         return mapper.load(User.class, user.getUserName());
     }
-    public User findByName(java.lang.String userName) {
+    public User findByName(String userName) {
         return mapper.load(User.class, userName);
     }
     public List<User> findAll() {
         return mapper.scan(User.class, new DynamoDBScanExpression());
     }
-    public java.lang.String update(java.lang.String userName, Movie movie) {
+    public String update(String userName, Movie movie) {
         User user = findByName(userName);
-        Set<Movie> movieSet = user.getMovies();
-        movieSet.add(movie);
+        Set<String> movieSet = user.getMovieSet();
+        user.addMovie(movie);
         mapper.save(user, new DynamoDBSaveExpression()
                 .withExpectedEntry("userName", new ExpectedAttributeValue(
                         new AttributeValue().withS(userName)
@@ -37,13 +37,13 @@ public class UserRepository {
         return "Successfully updated Movie for " + userName;
     }
 
-    public java.lang.String delete(java.lang.String userName) {
+    public String delete(String userName) {
         User user = mapper.load(User.class, userName);
         mapper.delete(user);
         return "Successfully deleted user" + userName;
     }
 
-    public java.lang.String addMovie (java.lang.String userName, Movie movie)  {
+    public String addMovie (String userName, Movie movie)  {
         User user = mapper.load(User.class, userName);
         if (!user.addMovie(movie)) {
             return "The movie " + movie + " already exists in the list.";
@@ -55,7 +55,7 @@ public class UserRepository {
                 )));
         return "The movie " + movie.getId() + " added successfully to user " + userName;
     }
-    public java.lang.String deleteMovie (java.lang.String userName, Movie movieToDelete) {
+    public String deleteMovie (String userName, Movie movieToDelete) {
         User user = mapper.load(User.class, userName);
         Set<Movie> movieSet = user.getMovies();
         if(movieSet.contains(movieToDelete)) {
@@ -72,8 +72,7 @@ public class UserRepository {
 
     public Set<Movie> getMovies(String userName) {
         User user = mapper.load(User.class, userName);
-        Set<Movie> movieSet = user.getMovies();
-        return movieSet;
+        return user.getMovies();
     }
 
 }

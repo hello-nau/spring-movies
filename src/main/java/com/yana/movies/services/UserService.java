@@ -24,7 +24,7 @@ public class UserService {
     public java.lang.String update(java.lang.String userName, Movie movie) {
         return userRepository.update(userName, movie);
     }
-    public Set<Movie> getMovies(java.lang.String userName) {
+    public Set<Movie> getMovies(String userName) {
         return userRepository.getMovies(userName);
     }
     public java.lang.String addMovie(java.lang.String userName, Movie movie)  {
