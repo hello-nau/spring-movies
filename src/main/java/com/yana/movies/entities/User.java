@@ -2,26 +2,25 @@ package com.yana.movies.entities;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIgnore;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.Gson;
 import lombok.Data;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
-@Data
+//@Data
 @DynamoDBTable(tableName = "users")
 public class User {
 @DynamoDBHashKey(attributeName = "userName")
-    private java.lang.String userName;
+    private String userName;
 @DynamoDBAttribute(attributeName = "movieList")
-    private Set<String> movieSet;
+    private List<String> movieSet;
 
     public User() {
-        this.movieSet = new HashSet<>();
+        this.movieSet = new ArrayList<>();
     }
 
     public String getUserName() {
@@ -32,28 +31,43 @@ public class User {
         this.userName = userName;
     }
 
-    public Set<String> getMovieSet() {
-        if (movieSet == null) movieSet = new HashSet<>();
+    public List<String> getMovieSet() {
+        if (movieSet == null) movieSet = new ArrayList<>();
         return movieSet;
     }
-    @JsonIgnore
-    public Set<Movie> getMovies() {
-        if(movieSet == null) movieSet = new HashSet<>();
+    @DynamoDBIgnore
+    public List<Movie> getMovies() {
+        if(movieSet == null) movieSet = new ArrayList<>();
         return movieSet.stream()
                 .map(json -> new Gson().fromJson(json, Movie.class))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
+
     public boolean addMovie(Movie movie) {
         String json = new Gson().toJson(movie);
         return movieSet.add(json);
     }
-    public void setMovieSet(Set<Movie> movies) {
+    public void setMovieSet(List<String> movieSet) {
+//        if(movieSet==null) {
+//            movieSet = new HashSet<>();
+//            movieSet.add("");
+//        }
+        this.movieSet = movieSet;
+    }
+    public void setMovieSet2(List<Movie> movies) {
         if(movies == null) {
-            this.movieSet = new HashSet<>();
+            this.movieSet = new ArrayList<>();
+            movieSet.add("");
         } else {
-            this.movieSet = movies.stream()
-                    .map(movie -> new Gson().toJson(movie))
-                    .collect(Collectors.toSet());
+            this.movieSet = new ArrayList<>();
+            for (Movie m : movies) {
+                Gson gson = new Gson();
+                String movieStr = gson.toJson(m);
+                movieSet.add(movieStr);
+            }
+//            this.movieSet = movies.stream()
+//                    .map(movie -> new Gson().toJson(movie).toString())
+//                    .collect(Collectors.toSet());
         }
     }
 

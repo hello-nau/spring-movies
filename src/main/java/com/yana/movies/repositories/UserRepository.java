@@ -31,7 +31,7 @@ public class UserRepository {
     }
     public String update(String userName, Movie movie) {
         User user = findByName(userName);
-        Set<String> movieSet = user.getMovieSet();
+        List<String> movieSet = user.getMovieSet();
         user.addMovie(movie);
         mapper.save(user, new DynamoDBSaveExpression()
                 .withExpectedEntry("userName", new ExpectedAttributeValue(
@@ -60,7 +60,7 @@ public class UserRepository {
     }
     public String deleteMovie (String userName, Movie movieToDelete) {
         User user = mapper.load(User.class, userName);
-        Set<Movie> movieSet = user.getMovies();
+        List<Movie> movieSet = user.getMovies();
         if(movieSet.contains(movieToDelete)) {
             movieSet.remove(movieToDelete);
         } else {
@@ -73,7 +73,7 @@ public class UserRepository {
         return "The movie " + movieToDelete.getId() + " was deleted successfully.";
     }
 
-    public Set<Movie> getMovies(String userName) {
+    public List<Movie> getMovies(String userName) {
         User user = mapper.load(User.class, userName);
         return user.getMovies();
     }

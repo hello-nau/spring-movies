@@ -4,23 +4,23 @@ import lombok.Data;
 
 import java.util.Objects;
 
-@Data
+//@Data
 @DynamoDBTable(tableName = "movies")
 public class Movie {
 @DynamoDBHashKey(attributeName = "id")
-java.lang.String id; //movieName
+String id; //movieName
 @DynamoDBAttribute(attributeName = "description")
-java.lang.String description;
+String description;
 
-    public void setId(java.lang.String id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public java.lang.String getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(java.lang.String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
     public java.lang.String getId() {
