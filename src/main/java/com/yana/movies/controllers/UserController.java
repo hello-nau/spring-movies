@@ -77,11 +77,11 @@ public class UserController {
 
 
     @PutMapping("/users/{userName}")
-    public ResponseEntity<java.lang.String> update (@PathVariable(value="userName") java.lang.String userName, @RequestBody Movie movie) {
+    public ResponseEntity<java.lang.String> update (@PathVariable(value="userName") String userName, @RequestBody Movie movie) {
         return ResponseEntity.ok(userService.update(userName, movie));
     }
     @PutMapping("/users/{userName}/movieList")
-    public ResponseEntity<java.lang.String> addMovie(@PathVariable(value="userName") java.lang.String userName, @RequestBody Movie movie) {
+    public ResponseEntity<String> addMovie(@PathVariable(value="userName") String userName, @RequestBody Movie movie) {
         User user = userService.findByName(userName);
         List<Movie> movieSet = user.getMovies();
         movieSet.add(movie);
@@ -89,16 +89,16 @@ public class UserController {
     }
 
     @DeleteMapping("users/{userName}")
-    public ResponseEntity<java.lang.String> delete (@PathVariable(value = "userName") java.lang.String userName) {
+    public ResponseEntity<java.lang.String> delete (@PathVariable(value = "userName") String userName) {
         return ResponseEntity.ok(userService.delete(userName));
     }
     @DeleteMapping("users/{userName}/movieList/{id}")
-    public ResponseEntity<java.lang.String> deleteMovie(@PathVariable(value = "userName") java.lang.String userName,
-                                                        @PathVariable(value = "id") java.lang.String stringId) {
+    public ResponseEntity<String> deleteMovie(@PathVariable(value = "userName") String userName,
+                                                        @PathVariable(value = "id") String movieId) {
         User user = userService.findByName(userName);
         if (user == null) throw new RuntimeException("User not found");
         List<Movie> movies = user.getMovies();
-        movies.removeIf(movie -> movie.getId().equals(stringId));
+        movies.removeIf(movie -> movie.getId().equals(movieId));
         user.setMovieSet2(movies);
         userService.save(user);
         return ResponseEntity.ok().build();
