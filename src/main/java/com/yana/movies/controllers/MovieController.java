@@ -10,11 +10,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class MovieController {
     @Autowired
     MovieService movieService;
-    @RequestMapping(value="/movies", produces="application/json")
+    @PostMapping(value="/movies", produces="application/json")
     public ResponseEntity<Movie> save(@RequestBody Movie movie) {
         return ResponseEntity.ok(movieService.save(movie));
     }

@@ -4,7 +4,7 @@ import lombok.Data;
 
 import java.util.Objects;
 
-//@Data
+@Data
 @DynamoDBTable(tableName = "movies")
 public class Movie {
 @DynamoDBHashKey(attributeName = "id")

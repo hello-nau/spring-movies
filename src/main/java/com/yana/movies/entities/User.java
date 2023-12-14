@@ -11,7 +11,7 @@ import lombok.Data;
 import java.util.*;
 import java.util.stream.Collectors;
 
-//@Data
+@Data
 @DynamoDBTable(tableName = "users")
 public class User {
 @DynamoDBHashKey(attributeName = "userName")
