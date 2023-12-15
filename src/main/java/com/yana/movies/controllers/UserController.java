@@ -16,7 +16,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class UserController {
     private static final Logger LOGGER = Logger.getLogger(UserController.class.getName());
     @Autowired
