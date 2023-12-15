@@ -1,0 +1,105 @@
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th {
+  background: #99ccff;
+}
+
+th, td {
+  padding: 6px;
+}
+#mv {
+  display: flex;
+  justify-content: center;
+}
+ table {
+      border-collapse: collapse;
+      width: 80%;
+      margin: auto;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #3498db;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #e0e0e0;
+    }
+  /* -----  User ----- */
+  #user-list {
+    width: 300px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+
+  #user-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  #user-list li {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  #user-form {
+    width: 300px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+
+  #user-form form {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #user-form input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  #user-form button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #user-form button:hover {
+    background-color: #2980b9;
+  }
+  #user-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
