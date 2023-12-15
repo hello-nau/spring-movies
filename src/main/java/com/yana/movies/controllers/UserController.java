@@ -22,7 +22,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/users", produces = "application/json")
+    @PostMapping(value = "/users", produces = "application/json")
     public ResponseEntity<User> save (@RequestBody User user) {
         return ResponseEntity.ok(userService.save(user));
     }
