@@ -3,11 +3,6 @@ const userList = document.querySelector("#user-list");
 
 window.onload = async function(evt) {
   evt.preventDefault();
-  // console.log("Getting users");
-  // axios.get("http://localhost:8080/users").then((res) => {
-  //   console.log(res.data);
-  //   populateUsers(res.data);
-  // })
   fetchUsers();
 } 
 
@@ -18,9 +13,20 @@ function populateUsers(userData) {
   for (let user of userData) {
     let li = document.createElement("li");
     li.appendChild(document.createTextNode(user.userName));
+
+    let deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.classList.add("delete-btn");
+
     li.onclick = function() {
+      openUser(user.userName);
+    }
+
+    deleteButton.onclick = function() {
       deleteUser(user.userName);
     };
+    li.appendChild(deleteButton);
+
     usrLi.appendChild(li);
   }
   userList.appendChild(usrLi);
@@ -61,7 +67,11 @@ if (confirm("Are you sure you want to delete this user?")) {
 }
 
 
-function openUser(userName) {}
+function openUser(userName) {
+  console.log("openUser function called");
+
+}
+
 function addMovieToUser(userName) {}
 
 function fetchUsers() {
