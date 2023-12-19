@@ -43,7 +43,7 @@ th, td {
       background-color: #e0e0e0;
     }
   /* -----  User ----- */
-  #user-list {
+  #user-list, #movie-list {
     width: 300px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -52,13 +52,13 @@ th, td {
     margin-top: 20px;
   }
 
-  #user-list ul {
+  #user-list ul, #movie-list ul {
     list-style: none;
     padding: 0;
     margin: 0;
   }
 
-  #user-list li {
+  #user-list li, #movie-list li {
     padding: 15px;
     border-bottom: 1px solid #e0e0e0;
   }
@@ -107,3 +107,12 @@ th, td {
     flex-direction: column;
     align-items: center;
   }
+
+
+#user-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+
