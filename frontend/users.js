@@ -69,8 +69,37 @@ if (confirm("Are you sure you want to delete this user?")) {
 
 function openUser(userName) {
   console.log("openUser function called");
+ const userTemplateUrl = "/user-template.html";
 
+ fetch(userTemplateUrl)
+  .then(response => response.text())
+  .then(templateHtml => {
+
+  axios.get(`http://localhost:8080/users/${userName}`)
+  .then(response => {
+    let userData = response.data;
+
+    localStorage.setItem('userData', JSON.stringify(userData));
+
+    let userContent = Mustache.render(templateHtml, userData);
+    let div = document.createElement("div");
+    div.classList.add("usr-container");
+
+    div.innerHTML = userContent;
+
+     window.open(`/user-template.html`, '_blank');
+  })
+  .catch(error => {
+    console.error("Error fetching user data", error);
+  })
+  .catch(error => {
+  console.error("Error loading template:", error);
+})
+
+  }) 
 }
+
+
 
 function addMovieToUser(userName) {}
 
