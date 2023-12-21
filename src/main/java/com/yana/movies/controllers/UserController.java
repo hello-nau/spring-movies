@@ -37,9 +37,6 @@ public class UserController {
         User user = userService.findByName(userName);
         if(user != null) {
             List<String> movieSet = user.getMovieSet();
-            for (String s : movieSet) {
-                System.out.println("for loop of what s in movieSet gives back: " + s);
-            }
             return ResponseEntity.ok(user);
         }
         return ResponseEntity.notFound().build();

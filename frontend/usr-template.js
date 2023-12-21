@@ -1,6 +1,6 @@
 
 
-var userName = new URL(location.href).searchParams.get("userName");
+let userName = new URL(location.href).searchParams.get("userName");
 window.onload = async function() {
 
   fetchUserList();
@@ -92,7 +92,6 @@ function populateMovies(movieData) {
   }
 
 function fetchUserList() {
-
  axios.get(`http://localhost:8080/users/${userName}`)
   .then(response => {
     let userData = response.data;
@@ -107,23 +106,40 @@ function fetchUserList() {
 
   for (let movie of movieList) {
     let li = document.createElement("li");
-      let span = document.createElement("span");
+    let span = document.createElement("span");
     span.textContent = movie.id;
-
+    let deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.classList.add("delete-btn");
 
     span.addEventListener("click", function() {
       openMovie(userData.userName, movie.id);
     });
 
+    deleteButton.onclick = function() {
+      deleteMovie(movie.id);
+    };
     li.appendChild(span);
-    li.appendChild(document.createTextNode(": "));
+    li.appendChild(document.createTextNode(" "));
     li.appendChild(document.createTextNode(movie.description));
-
+    li.appendChild(deleteButton);
     usrMvLi.appendChild(li);
   }
     
   })
-  
+
+}
+function deleteMovie(movieId) {
+  let id = movieId;
+    axios.delete(`http://localhost:8080/users/${userName}/movieList/${id}`)
+    .then(response => {
+      console.log("Movie deleted.");
+      fetchUserList();
+    })
+    .catch(error => {
+      console.log(error);
+    })
+
 
 }
 

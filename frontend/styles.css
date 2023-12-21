@@ -68,6 +68,7 @@ th, td {
   #user-list li, #movie-list li {
     padding: 15px;
     border-bottom: 1px solid #e0e0e0;
+
   }
   #usr-li li {
     display: flex;
@@ -125,4 +126,10 @@ th, td {
 #movie-list span {
 color: red;
 }
-
+#movie-list li {
+  display: flex;
+  flex-direction: column;
+}
+#movie-list li .delete-btn {
+  margin-top: 10px;
+}
