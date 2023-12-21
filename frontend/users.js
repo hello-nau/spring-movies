@@ -80,7 +80,6 @@ function openUser(userName) {
   .then(response => {
     let userData = response.data;
 
-    localStorage.setItem('userData', JSON.stringify(userData));
 
     let userContent = Mustache.render(templateHtml, userData);
     let div = document.createElement("div");

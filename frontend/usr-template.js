@@ -1,33 +1,9 @@
 
 
+var userName = new URL(location.href).searchParams.get("userName");
 window.onload = async function() {
 
-  let userData = JSON.parse(localStorage.getItem('userData'));
-  
-  let name = document.getElementById("userNm");
-  name.innerHTML = userData.userName;
-  let movieList = userData.movies;
-
-  console.log(movieList);
-
-  let usrMvLi = document.getElementById("movie-list");
-  for (let movie of movieList) {
-    let li = document.createElement("li");
-      let span = document.createElement("span");
-    span.textContent = movie.id;
-
-
-    span.addEventListener("click", function() {
-      openMovie(userData.userName, movie.id);
-    });
-
-    li.appendChild(span);
-    li.appendChild(document.createTextNode(": "));
-    li.appendChild(document.createTextNode(movie.description));
-
-    usrMvLi.appendChild(li);
-  }
-
+  fetchUserList();
     console.log("Getting Movies...");
   axios.get("http://localhost:8080/movies").then((res) => {
     console.log(res.data);
@@ -63,8 +39,6 @@ fetch(userTemplateUrl)
 }
 
 
-var userName = new URL(location.href).searchParams.get("userName");
-
 
 const movieTable = document.querySelector("#movies");
 
@@ -95,22 +69,62 @@ function populateMovies(movieData) {
   }
 
 
-//complete axios.post for movie here 
   function addMovie(movieId, movieDescription) {
     console.log(movieId);
     console.log(movieDescription);
 
+    let movie = {
+      id: movieId,
+      description: movieDescription
+    };
 
-  axios.put(`http://localhost:8080/users/${userName}`)
+
+  axios.put(`http://localhost:8080/users/${userName}`, movie)
   .then(response => {
     console.log(response.data);
+    fetchUserList();
   })
   .catch(error => {
     console.error(error);
   });
+  
 
   }
 
+function fetchUserList() {
 
+ axios.get(`http://localhost:8080/users/${userName}`)
+  .then(response => {
+    let userData = response.data;
+    let name = document.getElementById("userNm");
+  name.innerHTML = userData.userName;
+  let movieList = userData.movies;
+
+  console.log(movieList);
+
+  let usrMvLi = document.getElementById("movie-list");
+ usrMvLi.innerHTML = '';
+
+  for (let movie of movieList) {
+    let li = document.createElement("li");
+      let span = document.createElement("span");
+    span.textContent = movie.id;
+
+
+    span.addEventListener("click", function() {
+      openMovie(userData.userName, movie.id);
+    });
+
+    li.appendChild(span);
+    li.appendChild(document.createTextNode(": "));
+    li.appendChild(document.createTextNode(movie.description));
+
+    usrMvLi.appendChild(li);
+  }
+    
+  })
+  
+
+}
 
 
