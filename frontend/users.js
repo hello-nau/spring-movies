@@ -25,6 +25,7 @@ function populateUsers(userData) {
     deleteButton.onclick = function() {
       deleteUser(user.userName);
     };
+
     li.appendChild(deleteButton);
 
     usrLi.appendChild(li);
@@ -87,7 +88,7 @@ function openUser(userName) {
 
     div.innerHTML = userContent;
 
-     window.open(`/user-template.html`, '_blank');
+     window.open(`/user-template.html?userName=${userName}`, '_blank');
   })
   .catch(error => {
     console.error("Error fetching user data", error);

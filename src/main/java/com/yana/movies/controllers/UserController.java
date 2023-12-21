@@ -74,8 +74,6 @@ public class UserController {
             return ResponseEntity.ok(movieSet);
     }
 
-
-
     @PutMapping("/users/{userName}")
     public ResponseEntity<java.lang.String> update (@PathVariable(value="userName") String userName, @RequestBody Movie movie) {
         return ResponseEntity.ok(userService.update(userName, movie));

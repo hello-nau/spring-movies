@@ -3,7 +3,7 @@
 window.onload = async function() {
 
   let userData = JSON.parse(localStorage.getItem('userData'));
-  // let movieString = userData.movieSet;
+  
   let name = document.getElementById("userNm");
   name.innerHTML = userData.userName;
   let movieList = userData.movies;
@@ -21,15 +21,18 @@ window.onload = async function() {
       openMovie(userData.userName, movie.id);
     });
 
-
     li.appendChild(span);
     li.appendChild(document.createTextNode(": "));
     li.appendChild(document.createTextNode(movie.description));
 
-    
-
     usrMvLi.appendChild(li);
   }
+
+    console.log("Getting Movies...");
+  axios.get("http://localhost:8080/movies").then((res) => {
+    console.log(res.data);
+    populateMovies(res.data);
+  })
 
   }
 
@@ -53,12 +56,60 @@ fetch(userTemplateUrl)
 
     div.innerHTML = userContent;
 
-     window.open(`/movie.html`, '_blank');
+     window.open(`/movie.html?username=${userName}&id=${id}`, '_blank');
   })
 
   }) 
 }
 
+
+var userName = new URL(location.href).searchParams.get("userName");
+
+
+const movieTable = document.querySelector("#movies");
+
+
+function populateMovies(movieData) {
+  let table = document.getElementById("movie-table");
+
+  for (let movie of movieData) {
+    let row = document.createElement('tr');
+    let idCell = document.createElement("td");
+
+    idCell.appendChild(document.createTextNode(movie.id));
+
+    row.appendChild(idCell);
+
+    let descriptionCell = document.createElement("td");
+    descriptionCell.appendChild(document.createTextNode(movie.description));
+
+     row.onclick =  function() {
+      addMovie(idCell.innerHTML, descriptionCell.innerHTML);
+    }
+
+    row.appendChild(descriptionCell);
+    table.appendChild(row);
+  }
+  movieTable.appendChild(table);
+
+  }
+
+
+//complete axios.post for movie here 
+  function addMovie(movieId, movieDescription) {
+    console.log(movieId);
+    console.log(movieDescription);
+
+
+  axios.put(`http://localhost:8080/users/${userName}`)
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
+  }
 
 
 
