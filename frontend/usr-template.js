@@ -16,11 +16,12 @@ function openMovie(userName, id) {
 
 console.log("openMovie is called");
 const userTemplateUrl = "/movie.html";
+let encodedId = encodeURIComponent(id);
 
 fetch(userTemplateUrl) 
   .then(response => response.text())
   .then(templateHtml => {
-         axios.get(`http://localhost:8080/users/${userName}/movieList/${id}`)
+         axios.get(`http://localhost:8080/users/${userName}/movieList/${encodedId}`)
   .then(response => {
     let userData = response.data;
 

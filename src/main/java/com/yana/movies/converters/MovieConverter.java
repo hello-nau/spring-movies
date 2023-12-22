@@ -15,9 +15,12 @@ public class MovieConverter {
         return stringString;
     }
     public Movie stringToMovie(String stringStr) throws Exception {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String cleanJson = stringStr.trim().replace(" ", "");
+//        Movie movie = objectMapper.readValue(cleanJson, Movie.class);
+//        return movie;
         ObjectMapper objectMapper = new ObjectMapper();
-        String cleanJson = stringStr.trim().replace(" ", "");
-        Movie movie = objectMapper.readValue(cleanJson, Movie.class);
+        Movie movie = objectMapper.readValue(stringStr, Movie.class);
         return movie;
     }
 

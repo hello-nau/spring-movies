@@ -4,6 +4,8 @@ import com.yana.movies.converters.MovieConverter;
 import com.yana.movies.entities.Movie;
 import com.yana.movies.entities.User;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 import com.yana.movies.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,12 +50,23 @@ public class UserController {
         List<String> movieSet = user.getMovieSet();
         for (String s : movieSet) {
             Movie movie = new MovieConverter().stringToMovie(s);
+            System.out.println("MovieId from the arguments: " + movieId);
+            String encodedMovieId = URLEncoder.encode(movieId, StandardCharsets.UTF_8.toString())
+                    .replace("+", "%20");
+            System.out.println("Encoded movieId: " + encodedMovieId);
             if (movie.getId().equals(movieId)) {
-                String responseEntity = "Your response entity";
-                LOGGER.info("GET request (userMovie) successful with status code: 200, response entity: " + responseEntity);
+
+            if (encodedMovieId.equals(movieId)) {
+//                System.out.println("MovieId from arguments: " + movieId);
+//                System.out.println("Movie id from getId(): " + movie.getId());
+                String responseEntity = "userMovie()";
+                LOGGER.info("GET request successful with status code: 200, response entity: " + responseEntity);
                 return ResponseEntity.ok(movie);
             }
-        }
+                }
+            }
+
+        LOGGER.info(("userMovie() couldn't encode movieId."));
         return ResponseEntity.notFound().build();
     }
     @GetMapping("/users/{userName}/movieList")
