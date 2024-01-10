@@ -12,7 +12,6 @@ let userName = params.get('userName');
 let backLink = document.getElementById('back-link');
 backLink.href = `/user-template.html?userName=${userName}`;
 
-   
 }
 
 function populateMovies(movieData) {

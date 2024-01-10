@@ -25,9 +25,7 @@ function populateMovies(movieData) {
 
     row.appendChild(descriptionCell);
     table.appendChild(row);
-
   }
-
   movieTable.appendChild(table);
 
   }
