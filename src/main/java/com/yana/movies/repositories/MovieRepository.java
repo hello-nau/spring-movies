@@ -26,7 +26,7 @@ public class MovieRepository {
     public List<Movie> findAll() {
         return mapper.scan(Movie.class, new DynamoDBScanExpression());
     }
-    public java.lang.String update(java.lang.String id, Movie movie) {
+    public String update(String id, Movie movie) {
         mapper.save(movie, new DynamoDBSaveExpression()
                 .withExpectedEntry("id", new ExpectedAttributeValue(
                         new AttributeValue().withS(id)
