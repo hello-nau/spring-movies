@@ -13,16 +13,17 @@ public class MovieService {
     public Movie save(Movie movie) {
         return movieRepository.save(movie);
     }
-    public Movie findById(java.lang.String stringName) {
+    public Movie findById(String stringName) {
+       //TODO add check if it is a valid name
         return movieRepository.findByName(stringName);
     }
     public List<Movie> findAll(){
         return movieRepository.findAll();
     }
-    public java.lang.String update(java.lang.String stringName, Movie movie) {
+    public String update(String stringName, Movie movie) {
         return movieRepository.update(stringName, movie);
     }
-    public java.lang.String delete(java.lang.String stringName) {
+    public String delete(String stringName) {
         return movieRepository.delete(stringName);
     }
 

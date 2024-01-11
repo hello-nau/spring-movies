@@ -20,8 +20,8 @@ public class MovieRepository {
 //        return mapper.load(Movie.class, movie.getId());
         return movie;
     }
-    public Movie findByName(java.lang.String stringName) {
-        return mapper.load(Movie.class, stringName);
+    public Movie findByName(String id) {
+        return mapper.load(Movie.class, id);
     }
     public List<Movie> findAll() {
         return mapper.scan(Movie.class, new DynamoDBScanExpression());
@@ -34,7 +34,7 @@ public class MovieRepository {
         return "Successfully updated Movie" + id;
     }
 
-    public java.lang.String delete(java.lang.String stringName) {
+    public String delete(String stringName) {
         Movie movieToDelete = mapper.load(Movie.class, stringName);
         mapper.delete(movieToDelete);
         return "Successfully deleted movie " + stringName;

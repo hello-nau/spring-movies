@@ -48,10 +48,6 @@ public class User {
         return movieSet.add(json);
     }
     public void setMovieSet(List<String> movieSet) {
-//        if(movieSet==null) {
-//            movieSet = new HashSet<>();
-//            movieSet.add("");
-//        }
         this.movieSet = movieSet;
     }
     public void setMovieSet2(List<Movie> movies) {
