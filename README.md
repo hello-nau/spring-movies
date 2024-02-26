@@ -9,7 +9,7 @@ Movie Descriptions: Each movie in the list comes with a description, providing u
 Community Interaction: Users have the ability to view the favorite movies of others.
 <h3>Technology Stack</h3>
 
-<b>Backend:</b> The backend of the application is built with Java, utilizing the Spring Boot framework. AWS DynamoDB is used as the database for its scalability and performance.
+<b>Backend:</b> The backend of the application is built with Java, utilizing the Spring Boot framework. AWS DynamoDB is used as the database for its scalability and performance.<br>
 <b>Frontend:</b> The frontend is developed using JavaScript, HTML, and CSS.
 
 <h3>Future Developments</h3>
